@@ -1,5 +1,4 @@
 const Department = require('../Models/departmentModel')
-const jwt = require('jsonwebtoken');
 const User = require('../Models/userModel');
 
 const deptController = {
@@ -8,7 +7,7 @@ const deptController = {
             deptList = await Department.find();
             return res.status(200).json({ departments: deptList })
         } catch (error) {
-            console.log('Error finding departments', error);
+            console.log('Error fetching departments', error);
             return res.status(500).json({ message: 'Internal server error' })
         }
     },
@@ -45,10 +44,10 @@ const deptController = {
     update: async (req, res) => {
         try {
             const { name } = req.body;
-            const validateDept = await Department.findOne({name})
+            const validateDept = await Department.findOne({_id: req.params.id});
 
             if (validateDept.name === 'newcomer') {
-                return res.status(400).json({ message: 'Default department can not be deleted/updated' })
+                return res.status(400).json({ message: 'Default department can not be updated' })
             }
 
             const updateDept = await Department.findByIdAndUpdate(req.params.id, {name});

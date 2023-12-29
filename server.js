@@ -10,6 +10,7 @@ const authRoutes = require('./Routes/AuthRoutes');
 const deptRoutes = require('./Routes/DeptRoutes');
 const Department = require('./Models/departmentModel');
 const { verifyJWT } = require('./Middlewares/JwtMiddleware');
+const userRoutes = require('./Routes/UserRoutes');
 
 app.use(bodyParser.json());
 
@@ -24,4 +25,5 @@ mongoose.connect(process.env.MONGODB_ATLAS_CONNECTION_STRING)
 
 app.use('/auth', authRoutes);
 app.use('/dept', verifyJWT, deptRoutes);
+app.use('/user', verifyJWT, userRoutes);
 
