@@ -8,5 +8,6 @@ userRoutes.get('/employee',VerifyManagerRole, userController.employee);
 userRoutes.get('/employee/:id',VerifyManagerRole, userController.employeeById);
 userRoutes.get('/manager',VerifyManagerRole, userController.manager);
 userRoutes.get('/manager/:id',VerifyManagerRole, userController.managerById);
+userRoutes.get('/profile', userController.profile);
 
 module.exports = userRoutes;

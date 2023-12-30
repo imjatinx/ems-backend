@@ -11,6 +11,12 @@ const deptRoutes = require('./Routes/DeptRoutes');
 const Department = require('./Models/departmentModel');
 const { verifyJWT } = require('./Middlewares/JwtMiddleware');
 const userRoutes = require('./Routes/UserRoutes');
+const cors = require('cors')
+
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
+ }));
 
 app.use(bodyParser.json());
 

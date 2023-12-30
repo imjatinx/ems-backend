@@ -11,14 +11,14 @@ const authController = {
             const { name, username, password } = req.body;
 
             // Validate empty fields
-            if (!username || !password) {
-                return res.status(400).json({ message: 'Username and password are required' });
+            if (!name || !username || !password) {
+                return res.status(400).json({ message: 'All fields are required' });
             }
             
             // Validate existence for user
             const existingUser = await User.findOne({ username })
             if (existingUser) {
-                return res.status(200).json({ message: 'Username Already exist' })
+                return res.status(409).json({ message: 'Username Already exist' })
             }
 
             // Validate existence for default dept.
@@ -32,7 +32,7 @@ const authController = {
 
             newUser = User({ name, username, password:hashedPassword, department: newcomerDept._id });
             newUser.save()
-            return res.json({ message: 'User created successfully', "user": newUser });
+            return res.status(201).json({ message: 'User created successfully', "user": newUser });
         } catch (error) {
             console.log('Error creating user', error);
             return res.status(500).json({ message: 'Internal server error' });
@@ -41,6 +41,11 @@ const authController = {
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
+
+            // Validate empty fields
+            if (!username || !password) {
+                return res.status(400).json({ message: 'All fields are required' });
+            }
 
             // Validate credentials for user
             const user = await User.findOne({ username })

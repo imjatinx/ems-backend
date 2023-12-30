@@ -1,4 +1,5 @@
 const User = require("../Models/userModel");
+const jwt = require('jsonwebtoken')
 
 const userController = {
     list: async (req, res) => {
@@ -21,7 +22,7 @@ const userController = {
     },
     employeeById: async (req, res) => {
         try {
-            const employeeById = await User.findOne({ _id: req.params.id, role: 'employee'});
+            const employeeById = await User.findOne({ _id: req.params.id, role: 'employee' });
             return res.status(200).json({ user: employeeById });
         } catch (error) {
             console.log('Error fetching employees', error);
@@ -43,6 +44,21 @@ const userController = {
             return res.status(200).json({ user: managerById });
         } catch (error) {
             console.log('Error fetching managers', error);
+            return res.status(500).json({ message: 'Internal server error' })
+        }
+    },
+    profile: async (req, res) => {
+        try {
+            jwt.verify(req.token, process.env.JWT_SECRET_KEY, async (error, data) => {
+                if (error) {
+                    return res.status(500).json({ message: 'Not a valid token' })
+                }
+
+                const user = await User.findById(data.user._id).populate('department', 'name');
+                return res.status(200).json({ message:"Profile found successful", profile: user })
+            });
+        } catch (error) {
+            console.log('Error fetching profile', error);
             return res.status(500).json({ message: 'Internal server error' })
         }
     }

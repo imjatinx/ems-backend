@@ -3,7 +3,6 @@ const authController = require('../Controllers/AuthController');
 const authRoutes = express.Router();
 
 authRoutes.post('/login', authController.login)
-
 authRoutes.post('/signup', authController.signup)
 
 
