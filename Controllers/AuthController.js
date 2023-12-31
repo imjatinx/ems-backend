@@ -8,29 +8,43 @@ const bcrypt = require('bcrypt')
 const authController = {
     signup: async (req, res) => {
         try {
-            const { name, username, password } = req.body;
+            const { name, username, password, email, location } = req.body;
 
             // Validate empty fields
-            if (!name || !username || !password) {
+            if (!name || !username || !password || !email || !location) {
                 return res.status(400).json({ message: 'All fields are required' });
             }
-            
+
+            let formattedUsername = username.toLowerCase();
+
             // Validate existence for user
-            const existingUser = await User.findOne({ username })
+            const existingUser = await User.findOne({ formattedUsername })
             if (existingUser) {
                 return res.status(409).json({ message: 'Username Already exist' })
             }
 
-            // Validate existence for default dept.
-            const newcomerDept = await Department.findOne({ name: 'newcomer' });
-            if (!newcomerDept) {
-                return res.status(400).json({ message: 'Default Department "newcomer" not found' });
+            const { department } = req.body;
+            let newcomerDept = ''
+            if (department === undefined) {
+                // Validate existence for default dept. and add the user to the department
+                newcomerDept = await Department.findOne({ name: 'Newcomer' });
+                if (!newcomerDept) {
+                    return res.status(400).json({ message: 'Default Department "Newcomer" not found' });
+                }
+            } else {
+                newcomerDept = await Department.findOne({ name: department });
+                if (!newcomerDept) {
+                    return res.status(400).json({ message: 'Department not found' });
+                }
             }
-
+            
             // Encrypt the user password
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            newUser = User({ name, username, password:hashedPassword, department: newcomerDept._id });
+            let formattedName = name.charAt(0).toUpperCase() + name.slice(1)
+            let formattedLocation = location.charAt(0).toUpperCase() + location.slice(1)
+
+            newUser = User({ name:formattedName, username:formattedUsername, password: hashedPassword, email, location:formattedLocation, department: newcomerDept._id });
             newUser.save()
             return res.status(201).json({ message: 'User created successfully', "user": newUser });
         } catch (error) {

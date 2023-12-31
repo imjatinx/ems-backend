@@ -11,10 +11,10 @@ const departmentSchema = new mongoose.Schema({
 
 // Creating a default Department for new comers.
 departmentSchema.statics.createDefaultDepartment = async function () {
-  const existingDepartment = await this.findOne({ name: 'newcomer' });
+  const existingDepartment = await this.findOne({ name: 'Newcomer' });
 
   if (!existingDepartment) {
-    const defaultDepartment = new this({ name: 'newcomer' });
+    const defaultDepartment = new this({ name: 'Newcomer' });
     await defaultDepartment.save();
   }
 };

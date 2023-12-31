@@ -4,7 +4,7 @@ function VerifyManagerRole(req, res, next) {
     try {
         jwt.verify(req.token, process.env.JWT_SECRET_KEY, (error, data) => {
             if (error) {
-                return res.status(500).json({ message: 'Not a valid token' })
+                return res.status(401).json({ message: 'Not a valid token' })
             }
 
             if (data.user.role !== 'manager') {
