@@ -31,12 +31,9 @@ Check your terminal to see running status.
 
 #### 1. User signed up with their credentials, they will default added to a department name 'Newcomer' and their role will be employee by default.
 #### 2. then they can login and see their profile information.
-#### 3. if the login user's role is employee, they will see only 1 tab for profile information.
-#### 4. if the login user's role is manager, they will see only 3 more tab other than profile such as Employees, Managers, Departments.
-#### 5. A user with role manager is created at the time of project building from directly database.
-#### 6. then managers can operate employees, other managers and departments
-#### 7. but the current loggedin (self) manager can not delete and update their associated department and role.
-#### 8. if the employee role user wants to reach out to the manager routes from url bar then the system will automatically logged out and end the session.
+#### 3. A user with role manager is created at the time of project building from directly database.
+#### 4. Managers can operate employees, other managers and departments
+#### 5. but the current loggedin (self) manager can not delete and update their associated department and role.
 
 
 ## Usages
