@@ -39,7 +39,7 @@ Check your terminal to see running status.
 ## Usages
 ### Configuration:
 
-This app only APIs so that you can make requests from your frontend project or postman.
+This app contains only APIs so that you can make requests from your frontend project or postman.
 
 ### Functionality:
 There are login and signup functionality available for employees and only login available for managers ( Signup not for managers because a manager can create/assign a manager ).
