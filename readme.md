@@ -25,7 +25,7 @@ Check your terminal to see running status.
 
 ## Libraries used in this project
 
-### expressjs, nodemon, bycrypt, body-parser, jsonwebtoken, mongoose (mongoDB driver and ODM), dotenv, and core.
+### expressjs, nodemon, bycrypt, body-parser, jsonwebtoken, mongoose (mongoDB driver and ODM), dotenv, and cors.
 
 ## Techniques used in this project
 
