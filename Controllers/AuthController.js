@@ -8,10 +8,10 @@ const bcrypt = require('bcrypt')
 const authController = {
     signup: async (req, res) => {
         try {
-            const { name, username, password, email, location } = req.body;
+            const { name, username, password, email, location, role } = req.body;
 
             // Validate empty fields
-            if (!name || !username || !password || !email || !location) {
+            if (!name || !username || !password || !email || !location || !role) {
                 return res.status(400).json({ message: 'All fields are required' });
             }
 
@@ -29,7 +29,9 @@ const authController = {
                 // Validate existence for default dept. and add the user to the department
                 newcomerDept = await Department.findOne({ name: 'Newcomer' });
                 if (!newcomerDept) {
-                    return res.status(400).json({ message: 'Default Department "Newcomer" not found' });
+                    Department.createDefaultDepartment();
+                    newcomerDept = await Department.findOne({ name: 'Newcomer' });
+                    // return res.status(400).json({ message: 'Default Department "Newcomer" not found' });
                 }
             } else {
                 newcomerDept = await Department.findOne({ name: department });
@@ -44,7 +46,7 @@ const authController = {
             let formattedName = name.charAt(0).toUpperCase() + name.slice(1)
             let formattedLocation = location.charAt(0).toUpperCase() + location.slice(1)
 
-            newUser = User({ name:formattedName, username:formattedUsername, password: hashedPassword, email, location:formattedLocation, department: newcomerDept._id });
+            newUser = User({ name:formattedName, username:formattedUsername, password: hashedPassword, email, location:formattedLocation, department: newcomerDept._id, role });
             newUser.save()
             return res.status(201).json({ message: 'User created successfully', "user": newUser });
         } catch (error) {
