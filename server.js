@@ -29,6 +29,10 @@ mongoose.connect(process.env.MONGODB_ATLAS_CONNECTION_STRING)
 }).catch(error=>console.log('Something went wrong in Database connection: ',error));
 
 
+app.get('/', (req,res)=>{
+    return res.status(200).json({message : 'Welcome to the system!'})
+});
+
 app.use('/auth', authRoutes);
 app.use('/dept', verifyJWT, deptRoutes);
 app.use('/user', verifyJWT, userRoutes);

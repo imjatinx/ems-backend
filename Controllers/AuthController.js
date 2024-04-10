@@ -78,6 +78,9 @@ const authController = {
             return res.status(500).json({ message: "Internal server error" });
         }
 
+    },
+    welcome: async (req, res) => {
+        return res.status(200).json({ message: 'Try "/login" to login and "/signup" to register' });
     }
 }
 
