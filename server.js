@@ -14,7 +14,7 @@ const userRoutes = require('./Routes/UserRoutes');
 const cors = require('cors')
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://ems.techmedia.one'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://emhook.netlify.app'],
     methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
  }));
 
